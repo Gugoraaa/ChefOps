@@ -1,19 +1,16 @@
     import { X } from "lucide-react";
     import { useState } from "react";
+    import { addProductToOrders } from "@services/products";
+    import { type Product } from '../types/types';
 
-    type Product = {
-    name: string;
-    amount: number;
-    status: string
-    };
+    
 
-    export default function NewOrderModal({
-    isOpen,
-    onClose,
-    }: {
-    isOpen: boolean;
-    onClose: () => void;
-    }) {
+    type Props={
+        isOpen: boolean;
+        onClose: () => void;
+
+    }
+    export default function NewOrderModal({isOpen,onClose}:Props) {
     if (!isOpen) return null;
 
     const [productName, setProductName] = useState("");
@@ -32,14 +29,6 @@
         setProductAmount(1);
         }
     };
-
-    function addProductToOrders(product: { name: string; amount: number }) {
-        const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]");
-        existingOrders.push(product);
-        localStorage.setItem("orders", JSON.stringify(existingOrders));
-        }
-
-
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
         <div className="bg-white rounded-xl p-6 w-full max-w-xl relative shadow-2xl">
@@ -99,7 +88,7 @@
 
             {/* Submit */}
             <button className="mt-6 w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-900 transition" onClick={() => {
-                products.forEach((product) => addProductToOrders(product));
+                addProductToOrders(products);
                 setProducts([]); 
                 onClose();       
                 }}
