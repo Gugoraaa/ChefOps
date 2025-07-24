@@ -1,56 +1,40 @@
-import type { Order } from "src/types/types";
 import NewOrderButton from "@components/NewOrderButton";
 import OrderCard from "@components/OrderCard";
-import { useEffect, useState } from "react";
-import { getOrders } from "../../services/products";
+import { useAllOrders } from "@hooks/useAllOrders";
 
 export default function All() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [newOrder, setNewOrder] = useState(false);
-  const [newStatus, setNewStatus] = useState(false);
-  const [newCancel, setNewCancel] = useState(false);
+  const { orders, error, reload } = useAllOrders();
 
-  const loadOrders = () => {
-    const data = getOrders();
-    setOrders(data);
-  };
+  
+  if (error) return <p className="p-4 text-red-500">{error}</p>;
 
-  useEffect(() => {
-    setNewStatus(false);
-    setNewOrder(false);
-    setNewCancel(false);
-    loadOrders();
-    const data = getOrders();
-    setOrders(data);
-  }, [newOrder, newStatus,newCancel]);
-
-  if (orders.length == 0) {
+  if (orders.length === 0) {
     return (
       <>
         <div>
           <h2 className="text-2xl font-bold mb-4 text-amber-300">All Orders</h2>
-          <p>This is where you can view all orders.</p>
+          <p>No orders yet.</p>
         </div>
-        <NewOrderButton orderSwitch={() => setNewOrder(true)} />
+        <NewOrderButton orderSwitch={reload} />
       </>
     );
   }
 
   return (
     <>
-      <div className="p-4  ">
-        <div className="grid grid-cols-4 ">
+      <div className="p-4">
+        <div className="grid grid-cols-4">
           {orders.map((order) => (
             <OrderCard
               key={order.orderId}
               order={order}
-              statusSwitch={() => setNewStatus(true)}
-              cancelSwitch = {()=> setNewCancel(true)}
+              statusSwitch={reload}
+              cancelSwitch={reload}
             />
           ))}
         </div>
       </div>
-      <NewOrderButton orderSwitch={() => setNewOrder(true)} />
+      <NewOrderButton orderSwitch={reload} />
     </>
   );
 }

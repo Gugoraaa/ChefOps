@@ -15,12 +15,11 @@ export function addProductToOrders(product: Product[]): void {
   const minutes = now.getMinutes();
   const pad = (n: number) => n.toString().padStart(2, "0");
   const formatted_date = `${pad(hours)}:${pad(minutes)}`;
-  
 
   const newOrder: Order = {
     orderId: lastId + 1,
     products: product,
-    createdAt : formatted_date,
+    createdAt: formatted_date,
     status: Status.Queue,
   };
 
@@ -30,11 +29,18 @@ export function addProductToOrders(product: Product[]): void {
 }
 
 export function getOrders(): Order[] {
-  const orders: Order[] = JSON.parse(localStorage.getItem("orders") || "[]");
+  try {
+    const raw = localStorage.getItem("orders");
+    if (!raw) return [];
 
-  return orders.sort((a, b) => b.orderId - a.orderId);
+    const parsed = JSON.parse(raw) as Order[];
+
+    return parsed.sort((a, b) => Number(b.orderId) - Number(a.orderId));
+  } catch (error) {
+    console.error("Error parsing orders from localStorage", error);
+    return [];
+  }
 }
-
 
 export function DeleteOrderById(id: number): void {
   const existingOrders: Order[] = JSON.parse(
@@ -44,22 +50,22 @@ export function DeleteOrderById(id: number): void {
   localStorage.setItem("orders", JSON.stringify(updated));
 }
 
-export function getNewStatus (actualStatus:string): string{
-    switch (actualStatus){
-      case Status.Queue:
-        return Status.Cooking
-      case Status.Cooking:
-        return Status.Completed
-      case Status.Completed:
-        return Status.Completed
-    }
-    return 'undefined'
+export function getNewStatus(actualStatus: string): string {
+  switch (actualStatus) {
+    case Status.Queue:
+      return Status.Cooking;
+    case Status.Cooking:
+      return Status.Completed;
+    case Status.Completed:
+      return Status.Completed;
+  }
+  return "undefined";
 }
 
-export function updateStatus (order:Order): void {
-  const newStatus = getNewStatus(order.status)
-  order.status= newStatus
-  DeleteOrderById(order.orderId)
+export function updateStatus(order: Order): void {
+  const newStatus = getNewStatus(order.status);
+  order.status = newStatus;
+  DeleteOrderById(order.orderId);
   const existingOrders: Order[] = JSON.parse(
     localStorage.getItem("orders") || "[]"
   );
@@ -67,19 +73,19 @@ export function updateStatus (order:Order): void {
   localStorage.setItem("orders", JSON.stringify(existingOrders));
 }
 
-export function getOrdersByStatus(status:string):Order[]{
+export function getOrdersByStatus(status: string): Order[] {
   const allOrders = JSON.parse(localStorage.getItem("orders") || "[]");
-  const ordersByStatus = allOrders.filter((order:Order) => order.status == status);
-  return ordersByStatus
-
+  const ordersByStatus = allOrders.filter(
+    (order: Order) => order.status == status
+  );
+  return ordersByStatus;
 }
-export function cancelOrderService(order:Order): void{
-  order.status = Status.Canceled
-  DeleteOrderById(order.orderId)
+export function cancelOrderService(order: Order): void {
+  order.status = Status.Canceled;
+  DeleteOrderById(order.orderId);
   const existingOrders: Order[] = JSON.parse(
     localStorage.getItem("orders") || "[]"
   );
   existingOrders.push(order);
   localStorage.setItem("orders", JSON.stringify(existingOrders));
-
 }
