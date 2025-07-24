@@ -1,3 +1,4 @@
+import { exitCode } from "process";
 import { type Product, type Order, Status } from "../types/types";
 
 export function addProductToOrders(product: Product[]): void {
@@ -88,4 +89,18 @@ export function cancelOrderService(order: Order): void {
   );
   existingOrders.push(order);
   localStorage.setItem("orders", JSON.stringify(existingOrders));
+}
+
+export function getStatusColor(actualStatus: string):string{
+  switch (actualStatus) {
+    case Status.Queue:
+      return "text-blue-700 border-blue-700 ";
+    case Status.Cooking:
+      return "text-amber-600 text-amber-600";
+    case Status.Completed:
+      return "text-green-600 text-green-600";
+    case Status.Canceled:
+      return "text-red-500 text-red-500";
+  }
+  return "undefined"
 }

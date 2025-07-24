@@ -14,6 +14,6 @@ export default function Clock() {
   };
 
   return (
-    <div className="text-4xl font-mono  text-white ">{formatTime(time)}</div>
+    <div className="text-4xl font-mono text-white ">{formatTime(time)}</div>
   );
 }

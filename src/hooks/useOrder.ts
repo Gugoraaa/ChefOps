@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getOrdersByStatus } from "@services/products"
+import { getOrdersByStatus,getStatusColor } from "@services/products"
 import type { Order } from '../types/types';
 
 export function useOrders(status: string) {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [newStatus, setNewStatus] = useState(false);
+  const [newStatus, setStatus] = useState(false);
+  const [statusColor, setStatusColor]= useState("")
 
   const loadOrders = () => {
     const data = getOrdersByStatus(status);
@@ -12,12 +13,14 @@ export function useOrders(status: string) {
   };
 
   useEffect(() => {
-    setNewStatus(false);
+    setStatus(false);
+    setStatusColor(getStatusColor(status))
     loadOrders();
   }, [status, newStatus]); 
 
   return {
     orders,
-    reload: () => setNewStatus(true),
+    reload: () => setStatus(true),
+    statusColor
   };
 }

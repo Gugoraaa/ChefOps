@@ -5,6 +5,7 @@ import type { Order } from "src/types/types";
 export function useAllOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
+  
 
   const loadOrders = useCallback(() => {
     try {
@@ -18,6 +19,7 @@ export function useAllOrders() {
 
   useEffect(() => {
     loadOrders();
+
   }, [loadOrders]);
 
   return {

@@ -10,9 +10,10 @@ type Props = {
   order: Order;
   statusSwitch: () => void;
   cancelSwitch?: () => void;
+  status: string
 };
 
-export default function OrderCard({ order, statusSwitch,cancelSwitch }: Props) {
+export default function OrderCard({ order, statusSwitch,cancelSwitch,status }: Props) {
   const [statusCard, setNewStatus] = useState(order.status);
 
   const cancelOrder = () => {
@@ -39,7 +40,7 @@ export default function OrderCard({ order, statusSwitch,cancelSwitch }: Props) {
       <div className="bg-white border border-gray-300 hover:border-blue-500 transition-all duration-200 px-4 py-4 rounded-2xl">
         <div className="flex flex-row justify-between items-center my-2">
           <h5 className="text-sm text-gray-500 mb-1">Order: {order.orderId}</h5>
-          <span className="inline-block bg-gray-100 text-black text-sm px-4 py-1 rounded-full capitalize">
+          <span className={`inline-block rounded-full capitalize text-sm px-4 py-1 border-1 ${status}`}>
             {order.status}
           </span>
         </div>
