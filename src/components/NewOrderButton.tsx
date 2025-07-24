@@ -1,8 +1,15 @@
 import { useState } from "react";
 import NewOrderModal from "./NewOrderModal";
 
-export default function NewOrderButton() {
+type Props={
+  orderSwitch?: ()=> void
+}
+
+export default function NewOrderButton({orderSwitch}:Props) {
   const [isOpen, setIsOpen] = useState(false);
+  
+
+  
 
   return (
     <>
@@ -13,7 +20,7 @@ export default function NewOrderButton() {
         New Order
       </button>
 
-      <NewOrderModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <NewOrderModal isOpen={isOpen} onClose={() => setIsOpen(false)} orderSwitch= {orderSwitch}/>
     </>
   );
 }

@@ -10,12 +10,10 @@ export default function Clock() {
   }, []);
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString(); 
+    return date.toLocaleTimeString();
   };
 
   return (
-    <div className="text-4xl font-mono  text-white ">
-      {formatTime(time)}
-    </div>
+    <div className="text-4xl font-mono  text-white ">{formatTime(time)}</div>
   );
 }
