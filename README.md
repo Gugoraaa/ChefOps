@@ -1,69 +1,67 @@
-# React + TypeScript + Vite
+# ChefOps - Kitchen Order Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ChefOps is a kitchen order management application designed to help restaurants manage and track orders by status (Queued, Cooking, Completed, Canceled) in real time.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🧾 View all orders filtered by status:
+  - Queue
+  - Cooking
+  - Completed
+  - Canceled
+- ➕ Create new orders with the "New Order" button
+- 🧭 Real-time digital clock in the UI
+- 📁 Modular structure with components, hooks, and services
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```graphql
+src/
+├── components/        # Reusable UI components
+│   ├── Clock.tsx
+│   ├── MenuTabs.tsx
+│   ├── NavBar.tsx
+│   ├── NewOrderButton.tsx
+│   ├── NewOrderModal.tsx
+│   └── OrderCard.tsx
+├── hooks/             # Custom React hooks
+│   ├── useAllOrders.ts
+│   └── useOrder.ts
+├── pages/             # Page views based on order status
+│   ├── All.tsx
+│   ├── Canceled.tsx
+│   ├── Completed.tsx
+│   ├── Cooking.tsx
+│   └── Queue.tsx
+├── services/          # order-related services
+│   └── products.ts
+├── types/             # TypeScript type definitions
+│   └── types.ts
+├── App.tsx            # Main application entry point
+└── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/Gugoraaa/ChefOps.git
+cd kitchen-manager
+npm install
+npm run dev
 ```
+
+## Technologies Used
+
+- React
+- TypeScript
+- Vite
+- CSS Modules

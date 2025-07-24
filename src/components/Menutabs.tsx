@@ -12,7 +12,7 @@ const MenuTabs = () => {
   const location = useLocation();
 
   return (
-    <div className="flex flex-1 mx-40 py-5">
+    <div className="flex flex-1 mx-52 py-5">
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
         <div className="pb-3">
           <div className="flex border-b border-[#d9dbde] gap-8">
