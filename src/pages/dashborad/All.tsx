@@ -8,6 +8,7 @@ export default function All() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [newOrder, setNewOrder] = useState(false);
   const [newStatus, setNewStatus] = useState(false);
+  const [newCancel, setNewCancel] = useState(false);
 
   const loadOrders = () => {
     const data = getOrders();
@@ -15,22 +16,22 @@ export default function All() {
   };
 
   useEffect(() => {
-    setNewStatus(false)
+    setNewStatus(false);
     setNewOrder(false);
+    setNewCancel(false);
     loadOrders();
     const data = getOrders();
     setOrders(data);
-  }, [newOrder,newStatus]);
+  }, [newOrder, newStatus,newCancel]);
 
   if (orders.length == 0) {
     return (
       <>
-      <div>
-        <h2 className="text-2xl font-bold mb-4 text-amber-300">All Orders</h2>
-        <p>This is where you can view all orders.</p>
-      </div>
-      <NewOrderButton orderSwitch={() => setNewOrder(true)} />
-      
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-amber-300">All Orders</h2>
+          <p>This is where you can view all orders.</p>
+        </div>
+        <NewOrderButton orderSwitch={() => setNewOrder(true)} />
       </>
     );
   }
@@ -40,7 +41,12 @@ export default function All() {
       <div className="p-4  ">
         <div className="grid grid-cols-4 ">
           {orders.map((order) => (
-            <OrderCard key={order.orderId} order={order} statusSwitch= {()=> setNewStatus(true)}/>
+            <OrderCard
+              key={order.orderId}
+              order={order}
+              statusSwitch={() => setNewStatus(true)}
+              cancelSwitch = {()=> setNewCancel(true)}
+            />
           ))}
         </div>
       </div>

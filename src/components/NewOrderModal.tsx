@@ -83,7 +83,7 @@ export default function NewOrderModal({ isOpen, onClose,orderSwitch }: Props) {
           </div>
         </div>
 
-        {/* Submit */}
+        
         <button
           className="mt-6 w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-900 transition"
           onClick={() => {

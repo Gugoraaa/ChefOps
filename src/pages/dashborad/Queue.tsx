@@ -1,23 +1,9 @@
-import { useEffect, useState } from "react";
 import NewOrderButton from "@components/NewOrderButton";
 import OrderCard from "@components/OrderCard";
-import type { Order } from "src/types/types";
-import { getOrdersByStatus } from "@services/products";
+import { useOrders } from "@hooks/useOrder";
 
 export default function Cooking() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [newStatus, setNewStatus] = useState(false);
-
-  const loadOrders = () => {
-      const data = getOrdersByStatus("queue");
-      setOrders(data);
-    };
-
-  useEffect(() => {
-    setNewStatus(false)
-    loadOrders()
-    
-  }, [newStatus]);
+  const { orders, reload } = useOrders("queue");
 
   if (orders.length == 0) {
     return (
@@ -39,7 +25,7 @@ export default function Cooking() {
             <OrderCard
               key={order.orderId}
               order={order}
-              statusSwitch={() => setNewStatus(true)}
+              statusSwitch={reload}
             />
           ))}
         </div>

@@ -9,13 +9,16 @@ import {
 type Props = {
   order: Order;
   statusSwitch: () => void;
+  cancelSwitch?: () => void;
 };
 
-export default function OrderCard({ order, statusSwitch }: Props) {
+export default function OrderCard({ order, statusSwitch,cancelSwitch }: Props) {
   const [statusCard, setNewStatus] = useState(order.status);
 
   const cancelOrder = () => {
     cancelOrderService(order);
+    cancelSwitch?.()
+
   };
   const handleNewstatus = () => {
     return getNewStatus(order.status);
