@@ -1,4 +1,3 @@
-import { exitCode } from "process";
 import { type Product, type Order, Status } from "../types/types";
 
 export function addProductToOrders(product: Product[]): void {
